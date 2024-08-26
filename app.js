@@ -25,8 +25,6 @@ const App = {
       return item.toUpperCase()
     },
     removeNote(idx, event) {
-      console.log(event, 'deleted');
-      
       this.notes.splice(idx, 1)
     },
     changeNote(idx) {
@@ -47,12 +45,22 @@ const App = {
     },
   },
   computed: {
-    doubleCountComputed() {
-      console.log('doubleCountComputed');
-      
+    doubleCountComputed() {      
       return this.notes.length * 2
     },
   },
+  watch: {
+    inputValue(value) {
+      if (value.length > 10) {
+        this.inputValue = ''
+      }
+
+      console.log('inputValue', value);
+    },
+    valueToChange(value) {
+      console.log('valueToChange', value);
+    },
+  }
 }
 
 const app = Vue.createApp(App)
