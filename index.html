@@ -9,16 +9,57 @@
   </head>
   <body>
 
-    <div class="container pt-5" id="app">
-      <div class="card center">
-        <h1>{{ title }}: {{ counter }}</h1>
-        <div>
-          <button class="btn primary" v-on:click="counter++">increment</button>
-          <button class="btn danger" v-on:click="counter--">decrement</button>
+    <div class="container" id="app">
+      <div class="card">
+        <h1>{{ title }}</h1>
+        <div class="form-control">
+          <input 
+            type="text"
+            :placeholder="placeholderString" 
+            :value="inputValue"
+            @input="inputChangeHandler($event)"
+            @keypress.enter="addNewNote"
+          >
+        </div>
+        <button class="btn" @click="addNewNote">Add</button>
+        <hr/>
+        <ul class="list" v-if="notes.length !== 0">
+          <li class="list-item" v-for="(note, index) in notes">
+            ({{ index + 1 }}) {{ toUpperCase(note) }}
+            <div>
+              <button class="btn" @click="changeNote(index, $event)">change</button>
+              <button class="btn danger" @click="removeNote(index, $event)">delete</button>
+            </div>
+          </li>
+          <hr>
+          <li>
+            <strong>Number of notes: {{ notes.length }} | doubled: {{ doubleCountComputed }}</strong>
+          </li>
+        </ul>
+        <div v-else>Notes are ampty</div>
+      </div>
+
+      <div class="modal" v-if="modalOpen">
+        <div class="modal-body">
+          <h2>{{ modalTitle }}</h2>
+          <div class="form-control">
+            <input 
+              type="text"
+              :placeholder="placeholderString" 
+              :value="valueToChange"
+              @input="changeNoteInput($event)"
+              @keypress.enter="submitChangeNote"
+              @keypress.esc="closeModal"
+            >
+          </div>
+          <button class="btn" @click="closeModal">Close</button>
+          <button 
+            class="btn" 
+            @click="submitChangeNote" 
+          >Submit</button>
         </div>
       </div>
     </div>
-
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="app.js"></script>
