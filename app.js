@@ -12,9 +12,6 @@ const App = {
     }
   },
   methods: {
-    inputChangeHandler(event) {
-      this.inputValue = event.target.value
-    },
     addNewNote() {
       if (this.inputValue !== '') {
         this.notes.push(this.inputValue)
@@ -30,9 +27,6 @@ const App = {
     changeNote(idx) {
       this.currentNoteIndex = idx
       this.modalOpen = true
-    },
-    changeNoteInput(event) {
-      this.valueToChange = event.target.value
     },
     submitChangeNote() {
       this.notes[this.currentNoteIndex] = this.valueToChange
