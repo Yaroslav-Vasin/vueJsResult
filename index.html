@@ -10,60 +10,9 @@
   <body>
 
     <div class="container" id="app">
-      <div class="card">
-        <h1 :style="{
-          color: inputValue.length < 5 ? 'red' : 'black',
-          fontSize: inputValue.length < 5 ? '20px' : '30px'
-        }">{{ title }}</h1>
-        <div class="form-control">
-          <input 
-            type="text"
-            :placeholder="placeholderString" 
-            v-model="inputValue"
-            @keypress.enter="addNewNote"
-          >
-        </div>
-        <button class="btn" @click="addNewNote">Add</button>
-        <hr/>
-        <ul class="list" v-if="notes.length !== 0">
-          <li class="list-item" v-for="(note, index) in notes">
-            <!-- <span :class="note.length > 5 ? 'primary' : 'bold'">({{ index + 1 }}) {{ toUpperCase(note) }}</span> -->
-            <!-- <span :class="{
-              'primary': true,
-              'bold': note.length <= 5
-            }">({{ index + 1 }}) {{ toUpperCase(note) }}</span> -->
-            <span :class="['bold', {'promary': note.length > 5}]">({{ index + 1 }}) {{ toUpperCase(note) }}</span>
-            <div>
-              <button class="btn" @click="changeNote(index, $event)">change</button>
-              <button class="btn danger" @click="removeNote(index, $event)">delete</button>
-            </div>
-          </li>
-          <hr>
-          <li>
-            <strong>Number of notes: {{ notes.length }} | doubled: {{ doubleCountComputed }}</strong>
-          </li>
-        </ul>
-        <div v-else>Notes are ampty</div>
-      </div>
+      <div class="card center">
+       <h1 v-text="title"></h1>
 
-      <div class="modal" v-if="modalOpen">
-        <div class="modal-body">
-          <h2>{{ modalTitle }}</h2>
-          <div class="form-control">
-            <input 
-              type="text"
-              :placeholder="placeholderString" 
-              v-model="valueToChange"
-              @keypress.enter="submitChangeNote"
-              @keypress.esc="closeModal"
-            >
-          </div>
-          <button class="btn" @click="closeModal">Close</button>
-          <button 
-            class="btn" 
-            @click="submitChangeNote" 
-          >Submit</button>
-        </div>
       </div>
     </div>
 
