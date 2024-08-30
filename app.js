@@ -13,7 +13,8 @@ const app = Vue.createApp({
         { id: 3, title: 'Router', data: 'Data 3', active: false },
         { id: 4, title: 'Vuex', data: 'Data 4', active: false },
         { id: 5, title: 'Composition', data: 'Data 5', active: false }
-      ]
+      ],
+      nextButtonStatus: 'active'
     }
   },
   methods: {
@@ -22,9 +23,7 @@ const app = Vue.createApp({
     },
 
     isActive(step) {
-      if (step.active) {
-        return 'active'
-      }
+      return step.active ? 'active' : '';
     },
 
     changeStatus(step) {
@@ -64,6 +63,14 @@ const app = Vue.createApp({
       this.changeStatus(newStep)
     }
   },
+  computed: {
+    isPrevDisabled() {
+      return this.currentId <= 0;
+    },
+    buttonText() {
+      return this.currentId >= this.steps.length ? 'Завершить' : 'Далее';
+    }
+  },
   template: `
     <div class="card center">
         <h1>План по изучению Vue.js</h1>
@@ -83,8 +90,8 @@ const app = Vue.createApp({
         </nav>
         
         <div class="buttons-wrapper">
-            <button id="back-btn" class="button" @click="prevStep()">НАЗАД</button>
-            <button id="next-btn" class="button" @click="nextStep()">ДАЛЕЕ</button>
+            <button id="back-btn" class="button" @click="prevStep()" :disabled="isPrevDisabled">НАЗАД</button>
+            <button id="next-btn" class="button" @click="nextStep()">{{ buttonText }}</button>
         </div>
     </div>
   `,
