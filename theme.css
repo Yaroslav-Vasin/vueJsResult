@@ -411,6 +411,13 @@ h3 {
 
 /* task 1 */
 
+.buttons-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
 h1 {
     font-size: 24px;
     margin-bottom: 20px;
@@ -422,6 +429,7 @@ p {
 }
 
 nav {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
