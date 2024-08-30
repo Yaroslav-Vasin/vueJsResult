@@ -4,6 +4,7 @@ const h = Vue.h;
 const app = Vue.createApp({
   data() {
     return {
+      secondButtonText: 'Next',
       currentId: 0,
       count: 0,
       title: 'Hello Vue 3',
@@ -21,11 +22,9 @@ const app = Vue.createApp({
     changeTitle() {
       this.title = 'Changed title!'
     },
-
     isActive(step) {
       return step.active ? 'active' : '';
     },
-
     changeStatus(step) {
       console.log(step);
 
@@ -40,18 +39,19 @@ const app = Vue.createApp({
         }
       })
     },
-
     nextStep() {
       const newStep = this.currentId + 1
 
-      if (newStep > this.steps.length) {
+      if (newStep > this.steps.length + 1) {
         this.currentId - 1
         return
       }
 
+      console.log(this.currentId >= this.steps.length);
+
+
       this.changeStatus(newStep)
     },
-
     prevStep() {
       const newStep = this.currentId - 1
 
@@ -61,21 +61,37 @@ const app = Vue.createApp({
       }
 
       this.changeStatus(newStep)
-    }
+    },
+    restart() {
+      this.currentId = 0
+      this.steps.forEach(s => s.active = false)
+      this.steps.forEach(s => {
+        if (s.id <= this.currentId) {
+          s.active = false
+        }
+      })
+    },
   },
   computed: {
     isPrevDisabled() {
       return this.currentId <= 0;
     },
     buttonText() {
-      return this.currentId >= this.steps.length ? 'Завершить' : 'Далее';
+      this.secondButtonText = this.currentId >= this.steps.length ? 'End' : 'Next';
+      return this.secondButtonText;
+    },
+    setOfButtons() {
+      return this.currentId > this.steps.length ? false : true;
+    },
+    currentData() {
+      return this.steps[this.currentId - 1].data
     }
   },
   template: `
     <div class="card center">
         <h1>План по изучению Vue.js</h1>
-        <p>Одним из наиболее важных обновлений в Vue 3 является появление альтернативного синтаксиса Composition API...</p>
-        
+        <p>{{ this.currentData }}</p>
+
         <nav>
           <a v-for="(step, index) in steps"
             key="item.title"
@@ -88,10 +104,11 @@ const app = Vue.createApp({
               <div class="step-label">Основы</div>
           </a>
         </nav>
-        
-        <div class="buttons-wrapper">
-            <button id="back-btn" class="button" @click="prevStep()" :disabled="isPrevDisabled">НАЗАД</button>
-            <button id="next-btn" class="button" @click="nextStep()">{{ buttonText }}</button>
+
+        <div class="buttons">
+            <button v-if="setOfButtons" id="back-btn" class="button" @click="prevStep()" :disabled="isPrevDisabled">Back</button>
+            <button v-if="setOfButtons" id="next-btn" class="button" @click="nextStep()">{{ buttonText }}</button>
+            <button v-else="setOfButtons" id="next-btn" class="button" @click="restart()">Restart</button>
         </div>
     </div>
   `,
