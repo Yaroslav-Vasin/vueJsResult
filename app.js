@@ -19,6 +19,9 @@ const app = Vue.createApp({
     }
   },
   methods: {
+    getTitle(index) {
+      return this.steps[index].title;
+    },
     changeTitle() {
       this.title = 'Changed title!'
     },
@@ -84,7 +87,19 @@ const app = Vue.createApp({
       return this.currentId > this.steps.length ? false : true;
     },
     currentData() {
-      return this.steps[this.currentId - 1].data
+      // Убедитесь, что currentId не выходит за пределы массива
+      if (this.currentId === 0) {
+        return this.steps[0].data;
+      }
+
+      if (this.currentId >= 1 && this.currentId <= this.steps.length) {
+        return this.steps[this.currentId - 1].data;
+      }
+
+      if (this.currentId > this.steps.length) {
+        return this.steps[this.steps.length - 1].data;
+      }
+
     }
   },
   template: `
@@ -101,7 +116,7 @@ const app = Vue.createApp({
             @click="changeStatus(step)"
           >
               <div class="step-number">{{ index + 1 }}</div>
-              <div class="step-label">Основы</div>
+              <div class="step-label">{{ getTitle(index) }}</div>
           </a>
         </nav>
 
@@ -121,9 +136,9 @@ const app = Vue.createApp({
   // beforeMount() {
   //   console.log('beforeMount');
   // },
-  // mounted() {
-  //   console.log('mounted');
-  // },
+  mounted() {
+    console.log('mounted');
+  },
   // beforeUpdate() {
   //   console.log('beforeUpdate');
   // },

@@ -464,9 +464,11 @@ nav a.active .step-number {
 }
 
 .buttons {
+    width: 100%;
     display: flex;
     margin-top: 30px;
     gap: 24px;
+    padding-left: 24px;
 }
 
 .button {
