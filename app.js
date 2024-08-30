@@ -13,21 +13,23 @@ const app = Vue.createApp({
       this.title = 'Changed title!'
     }
   },
-  // template: `
-  //   <div class="card center">
-  //     <h1>{{ title }}</h1>
-  //     <button @click="title = 'Chenged title!'">Click me</button>
-  //   </div>
-  // `
-  render() {
-    return h('div', { class: 'card center' }, [
-      h('h1', this.title),
-      h('button', {
-        class: 'btn',
-        onClick: this.changeTitle
-      }, 'Click me')
-    ])
-  },
+  template: `
+    <div class="card center">
+      <h1>{{ title }}</h1>
+      <div class="content-wrapper">
+        <button @click="count++">Back</button>
+        <button @click="changeTitle()">Forward</button>
+      </div>
+      <div class="label-wrapper">
+        <button @click="count++">Back</button>
+        <button @click="changeTitle()">Forward</button>
+      </div>
+      <div class="Buttons-wrapper">
+        <button @click="count++">Back</button>
+        <button @click="changeTitle()">Forward</button>
+      </div>
+    </div>
+  `,
   beforeCreate() {
     console.log('beforeCreate');
   },
