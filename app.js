@@ -17,12 +17,15 @@ const app = Vue.createApp({
     <div class="card center">
       <h1>{{ title }}</h1>
       <div class="content-wrapper">
-        <button @click="count++">Back</button>
-        <button @click="changeTitle()">Forward</button>
+        content 1
       </div>
       <div class="label-wrapper">
-        <button @click="count++">Back</button>
-        <button @click="changeTitle()">Forward</button>
+        <ul>
+          <li v-for>
+            <span>Count: </span>
+            {{ count }}
+          </li>
+        </ul>
       </div>
       <div class="Buttons-wrapper">
         <button @click="count++">Back</button>
